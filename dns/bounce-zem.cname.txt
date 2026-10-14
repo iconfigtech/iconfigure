@@ -1,0 +1,12 @@
+# CNAME Record
+
+Record Type: CNAME
+Host: bounce-zem
+Value: cluster89.zeptomail.com
+TTL: use DNS provider default (or set as desired)
+
+Notes:
+- Add this CNAME record to your DNS provider for the domain where you want bounce handling configured.
+- Host/Name should be exactly: bounce-zem
+- Value/Target should be exactly: cluster89.zeptomail.com
+- Do not add a trailing dot unless your DNS provider requires it.
