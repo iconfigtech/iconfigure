@@ -1,12 +1,3 @@
-# DKIM TXT Record
+deleted
 
-Record Type: TXT
-Host: 14152828._domainkey
-Value: k=rsa; p=MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAkQb/1+MrLjB74/ihXBVQeBHMh0MWm0Y+J/qMk9lHAjYhTjPfg3z+BYJUYXtR86OdowYpydJrSbsSwlgEG2gouI0G3SNiTJb1pEIR29n/pZUuDMP0PuGMys2zs6ZTXoTBkj8/S1eYQcAFgkt53IygBuU9CVlPe80W8+YuBc0jOZncN7O+nthm7wKo4hgtVz+3xGhWZG2KRCnLJsAvDe/iF6sWQQEOqomyUYqEcwMvcizZb7yJYccaZo6Ma+i078eixAHEIYVd8TCct1pEqLq0NV1UPzcfh73Cca4xC7TGZwK2Tpp9hbVa0Wi2FcU/cr6PoVMkhVSKgxSCxVgBMpBVXQIDAQAB
-Key length: 2048 Bits
-
-Notes:
-- Add this TXT record to your DNS provider for the domain where this DKIM selector is used.
-- Host/Name should be exactly: 14152828._domainkey
-- Value is the public key (no additional surrounding quotes unless your DNS provider requires them).
-- TTL: use your DNS provider's default or set as desired.
+This file contained sensitive DNS records that were removed from the tip of the branch.
