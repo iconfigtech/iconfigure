@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="theme-color" content="#000000">
+    <meta name="description" content="iConfigure — Software and Hardware Solutions. Precision iPhone restoration and board-level laboratory, Dubai.">
     <title>iConfigure</title>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -12,30 +13,31 @@
         #webgl { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
         .cinematic-container { position: fixed; inset: 0; z-index: 10; pointer-events: none; padding: calc(16px + env(safe-area-inset-top, 0px)) 22px 28px; }
         .main-header { display: flex; justify-content: space-between; align-items: center; pointer-events: auto; padding: 8px 0 12px; }
-        .brand-mark { display: inline-flex; background: #fff; color: #000; border-radius: 8px; padding: 6px 12px; font-size: 18px; font-weight: 600; text-decoration: none; }
-        .contact-btn { background: #fff; color: #000; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 10px 16px; border-radius: 24px; }
-        .slide { position: absolute; left: 0; right: 0; bottom: 18%; width: auto; padding: 0 22px; opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
+        .brand-mark { display: inline-flex; background: #fff; color: #000; border-radius: 8px; padding: 6px 12px; font-size: 18px; font-weight: 600; text-decoration: none; letter-spacing: -0.02em; }
+        .contact-btn { background: #fff; color: #000; text-decoration: none; font-size: 11px; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; padding: 10px 16px; border-radius: 24px; }
+        .slide { position: absolute; left: 0; right: 0; bottom: 18%; width: auto; padding: 0 22px; opacity: 0; visibility: hidden; transition: opacity 0.45s ease; }
         .slide.active { opacity: 1; visibility: visible; pointer-events: auto; }
+        .slide-kicker { font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase; color: rgba(255,246,237,0.45); margin-bottom: 10px; }
         .slide-title { font-size: clamp(40px, 11vw, 96px); line-height: 0.94; font-weight: 600; letter-spacing: -0.035em; margin-bottom: 14px; color: #fff6ed; max-width: 92%; text-shadow: 0 8px 28px rgba(0,0,0,0.55); }
-        .slide-desc { font-size: 16px; line-height: 1.45; color: #e5e7eb; max-width: 28em; padding-right: 12px; text-shadow: 0 4px 18px rgba(0,0,0,0.7); }
-        .grade-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
-        .grade-row span { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; border: 1px solid rgba(255,246,237,0.28); padding: 6px 10px; border-radius: 999px; color: #fff6ed; }
-        .lab-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+        .slide-desc { font-size: 16px; line-height: 1.5; color: #e5e7eb; max-width: 28em; padding-right: 12px; text-shadow: 0 4px 18px rgba(0,0,0,0.7); font-weight: 300; }
+        .grade-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 16px; }
+        .grade-row span { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; border: 1px solid rgba(255,246,237,0.28); padding: 6px 12px; border-radius: 999px; color: #fff6ed; }
+        .lab-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 16px; }
         .lab-col h3 { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 8px; color: #fff6ed; }
         .lab-list { list-style: none; }
-        .lab-list li { font-size: 14px; color: #d1d5db; padding: 4px 0; }
-        .lab-kicker, .lab-skus { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,246,237,0.5); margin: 10px 0; }
-        .contact-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
-        .contact-row a { padding: 12px 18px; border-radius: 24px; text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; }
+        .lab-list li { font-size: 14px; color: #d1d5db; padding: 4px 0; font-weight: 300; }
+        .lab-skus { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,246,237,0.45); margin-top: 14px; }
+        .contact-row { display: flex; gap: 10px; margin-top: 18px; flex-wrap: wrap; }
+        .contact-row a { padding: 12px 18px; border-radius: 24px; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; }
         .contact-row .wa { background: #fff; color: #000; }
         .contact-row .call { border: 1px solid rgba(255,255,255,0.35); color: #fff; }
         .mobile-chapters { display: flex; position: fixed; left: 16px; right: 16px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 30; gap: 6px; pointer-events: auto; }
-        .mobile-chapters a { flex: 1; text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; color: rgba(255,255,255,0.85); background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 10px 4px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .mobile-chapters a { flex: 1; text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: rgba(255,255,255,0.85); background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 10px 4px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
         .mobile-chapters a.active { background: #fff; color: #000; border-color: #fff; }
         @media (min-width: 900px) {
             .cinematic-container { padding: 28px 60px 40px; }
             .slide { padding: 0 40px; bottom: 22%; }
-            .mobile-chapters { left: 50%; right: auto; transform: translateX(-50%); width: min(520px, 90vw); }
+            .mobile-chapters { left: 50%; right: auto; transform: translateX(-50%); width: min(560px, 90vw); }
         }
     </style>
     <script type="importmap">
@@ -51,40 +53,42 @@
     <div class="cinematic-container">
         <div class="main-header">
             <a class="brand-mark" href="#slide-1">iConfigure</a>
-            <a class="contact-btn" href="https://wa.me/971559946415">WhatsApp</a>
+            <a class="contact-btn" href="https://wa.me/971559946415">Contact</a>
         </div>
 
         <div class="slide active" id="slide-1">
-            <h2 class="slide-title">Restore<br>iPhone</h2>
-            <p class="slide-desc">Dubai iPhone repair and refurbishment. Screens, batteries, housings, board-level work.<br>Partners with stock to recover, and people who want their own phone back.</p>
+            <p class="slide-kicker">Software & Hardware Solutions · Dubai</p>
+            <h2 class="slide-title">Precision<br>Restoration</h2>
+            <p class="slide-desc">iPhone repair and refurbishment executed to laboratory standard. Display, battery, housing, and board-level recovery for wholesale inventory and private devices.</p>
         </div>
 
         <div class="slide" id="slide-2">
-            <h2 class="slide-title">Partner<br>Stock</h2>
-            <p class="slide-desc">Trade-ins, returns, graded lots. Restored and sent back ready for resale. Outbound on your grade sheet.</p>
+            <p class="slide-kicker">Wholesale · Trade-in · Returns</p>
+            <h2 class="slide-title">Partner<br>Programme</h2>
+            <p class="slide-desc">Structured restoration for graded lots and partner stock. Devices return ready for resale, aligned to your outbound grade sheet.</p>
             <div class="grade-row"><span>A+</span><span>A</span><span>B</span><span>C</span><span>BER</span></div>
         </div>
 
         <div class="slide" id="slide-lab">
-            <h2 class="slide-title">The<br>Lab</h2>
-            <p class="lab-kicker">Board level</p>
-            <p class="slide-desc">No power, no charge, boot loop, liquid. Rail first. Heat last. Original board, original IMEI.</p>
+            <p class="slide-kicker">Board-level laboratory</p>
+            <h2 class="slide-title">The<br>Laboratory</h2>
+            <p class="slide-desc">No power, charge failure, boot loop, liquid ingress. Diagnostics first. Controlled heat last. Original board. Original IMEI.</p>
             <div class="lab-cols">
                 <div class="lab-col">
-                    <h3>Diagnose</h3>
+                    <h3>Diagnostics</h3>
                     <ul class="lab-list">
-                        <li>Current-draw on the bench</li>
-                        <li>Thermal short hunt</li>
-                        <li>Ultrasonic liquid clean</li>
-                        <li>Schematic rail trace</li>
+                        <li>Current-draw analysis</li>
+                        <li>Thermal short isolation</li>
+                        <li>Ultrasonic decontamination</li>
+                        <li>Schematic rail tracing</li>
                     </ul>
                 </div>
                 <div class="lab-col">
-                    <h3>Restore</h3>
+                    <h3>Restoration</h3>
                     <ul class="lab-list">
-                        <li>Charging and power ICs</li>
+                        <li>Power & charging ICs</li>
                         <li>Backlight, audio, touch</li>
-                        <li>Connector and pad rebuild</li>
+                        <li>Connector & pad rebuild</li>
                         <li>BGA reball · board split</li>
                     </ul>
                 </div>
@@ -93,13 +97,15 @@
         </div>
 
         <div class="slide" id="slide-3">
-            <h2 class="slide-title">Personal</h2>
-            <p class="slide-desc">Cracked glass, swelling battery, no-power, water damage. Message us, drop the phone, pick it up restored.</p>
+            <p class="slide-kicker">Private client</p>
+            <h2 class="slide-title">Private<br>Service</h2>
+            <p class="slide-desc">Individual devices to the same laboratory standard. Display, battery, power failure, liquid damage — discreet intake, precise return.</p>
         </div>
 
         <div class="slide" id="slide-4">
-            <h2 class="slide-title">Talk<br>to us</h2>
-            <p class="slide-desc">Mukthar · Technical Specialist. WhatsApp or call +971 55 994 6415. Dubai, UAE.</p>
+            <p class="slide-kicker">Dubai · UAE</p>
+            <h2 class="slide-title">Begin a<br>Conversation</h2>
+            <p class="slide-desc">Mukthar · Technical Specialist. Coordination for partner lots and private service.</p>
             <div class="contact-row">
                 <a class="wa" href="https://wa.me/971559946415">WhatsApp</a>
                 <a class="call" href="tel:+971559946415">Call</a>
@@ -108,11 +114,11 @@
     </div>
 
     <nav class="mobile-chapters">
-        <a href="#slide-1" class="nav-link active">Repair</a>
-        <a href="#slide-2" class="nav-link">B2B</a>
+        <a href="#slide-1" class="nav-link active">Service</a>
+        <a href="#slide-2" class="nav-link">Partners</a>
         <a href="#slide-lab" class="nav-link">Lab</a>
-        <a href="#slide-3" class="nav-link">You</a>
-        <a href="#slide-4" class="nav-link">Talk</a>
+        <a href="#slide-3" class="nav-link">Private</a>
+        <a href="#slide-4" class="nav-link">Contact</a>
     </nav>
 
     <canvas id="webgl"></canvas>
@@ -167,10 +173,15 @@
             camera.position.set(0, 0.2, 3);
             scene.add(camera);
 
-            renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
-            renderer.setSize(sizes.width, sizes.height);
-            renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
-            renderer.outputColorSpace = THREE.SRGBColorSpace;
+            try {
+                renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
+                renderer.setSize(sizes.width, sizes.height);
+                renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+                renderer.outputColorSpace = THREE.SRGBColorSpace;
+            } catch (e) {
+                console.warn('WebGL unavailable', e);
+                return;
+            }
 
             uniforms = {
                 uTime: { value: 0 },
@@ -259,13 +270,16 @@
                 }
                 sparks.geometry.attributes.position.needsUpdate = true;
             }
+            if (!renderer) return;
             const phi = currentScroll * Math.PI * 2;
             const y = 0.35 + Math.sin(currentScroll * Math.PI) * 0.8;
             const r = 4.2 - Math.sin(currentScroll * Math.PI) * 0.6;
             camera.position.lerp(new THREE.Vector3(r * Math.sin(phi), y, r * Math.cos(phi)), 0.04);
             camera.lookAt(0, -0.15, 0);
-            uniforms.uTime.value = clock.getElapsedTime();
-            uniforms.uScroll.value = currentScroll;
+            if (uniforms) {
+                uniforms.uTime.value = clock.getElapsedTime();
+                uniforms.uScroll.value = currentScroll;
+            }
             updateSlides(currentScroll);
             renderer.render(scene, camera);
         }
@@ -284,10 +298,11 @@
         addEventListener('resize', () => {
             sizes.width = innerWidth;
             sizes.height = innerHeight;
+            if (!camera || !renderer) return;
             camera.aspect = sizes.width / sizes.height;
             camera.updateProjectionMatrix();
             renderer.setSize(sizes.width, sizes.height);
-            uniforms.uResolution.value.set(sizes.width, sizes.height);
+            if (uniforms) uniforms.uResolution.value.set(sizes.width, sizes.height);
         });
 
         if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot);
