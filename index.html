@@ -1,66 +1,297 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#000000">
-<title>iConfigure</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;margin:0;background:#000;touch-action:pan-y;-webkit-overflow-scrolling:touch}
-body{min-height:900vh;font-family:-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;color:#fff;overflow-x:hidden}
-#webgl{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
-.cinematic-container{position:fixed;inset:0;z-index:10;pointer-events:none;padding:calc(16px + env(safe-area-inset-top,0px)) 22px 28px}
-.main-header{display:flex;justify-content:space-between;align-items:center;pointer-events:auto;padding:8px 0 12px}
-.brand-mark{display:inline-flex;background:#fff;color:#000;border-radius:8px;padding:6px 12px;font-size:18px;text-decoration:none}
-.contact-btn{background:#fff;color:#000;text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:10px 16px;border-radius:24px}
-.slide{position:absolute;left:0;right:0;bottom:18%;width:auto;padding:0 22px;opacity:0;visibility:hidden}
-.slide.active{opacity:1;visibility:visible;pointer-events:auto}
-.slide-title{font-size:clamp(40px,11vw,96px);line-height:.94;font-weight:600;letter-spacing:-.035em;margin-bottom:14px;color:#fff6ed;max-width:92%;text-shadow:0 8px 28px rgba(0,0,0,.55)}
-.slide-desc{font-size:16px;line-height:1.45;color:#e5e7eb;max-width:28em;padding-right:12px;text-shadow:0 4px 18px rgba(0,0,0,.7)}
-.grade-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.grade-row span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;border:1px solid rgba(255,246,237,.28);padding:6px 10px;border-radius:999px}
-.lab-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-.lab-col h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
-.lab-list{list-style:none}
-.lab-list li{font-size:14px;color:#d1d5db;padding:4px 0}
-.lab-kicker,.lab-skus{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,246,237,.5);margin:10px 0}
-.contact-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
-.contact-row a{padding:12px 18px;border-radius:24px;text-decoration:none;font-size:13px;font-weight:600;text-transform:uppercase}
-.contact-row .wa{background:#fff;color:#000}
-.contact-row .call{border:1px solid rgba(255,255,255,.35);color:#fff}
-.mobile-chapters{display:flex;position:fixed;left:16px;right:16px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:30;gap:6px;pointer-events:auto}
-.mobile-chapters a{flex:1;text-align:center;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.8);background:rgba(0,0,0,.5);b[...]
-</style>
-<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/loaders/GLTFLoader.js":"https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTF[...]
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="theme-color" content="#000000">
+    <title>iConfigure</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; margin: 0; background: #000; touch-action: pan-y; -webkit-overflow-scrolling: touch; }
+        body { min-height: 900vh; font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display", Helvetica, Arial, sans-serif; color: #fff; overflow-x: hidden; }
+        #webgl { position: fixed; inset: 0; width: 100%; height: 100%; z-index: 1; pointer-events: none; }
+        .cinematic-container { position: fixed; inset: 0; z-index: 10; pointer-events: none; padding: calc(16px + env(safe-area-inset-top, 0px)) 22px 28px; }
+        .main-header { display: flex; justify-content: space-between; align-items: center; pointer-events: auto; padding: 8px 0 12px; }
+        .brand-mark { display: inline-flex; background: #fff; color: #000; border-radius: 8px; padding: 6px 12px; font-size: 18px; font-weight: 600; text-decoration: none; }
+        .contact-btn { background: #fff; color: #000; text-decoration: none; font-size: 12px; font-weight: 600; letter-spacing: 1px; text-transform: uppercase; padding: 10px 16px; border-radius: 24px; }
+        .slide { position: absolute; left: 0; right: 0; bottom: 18%; width: auto; padding: 0 22px; opacity: 0; visibility: hidden; transition: opacity 0.4s ease; }
+        .slide.active { opacity: 1; visibility: visible; pointer-events: auto; }
+        .slide-title { font-size: clamp(40px, 11vw, 96px); line-height: 0.94; font-weight: 600; letter-spacing: -0.035em; margin-bottom: 14px; color: #fff6ed; max-width: 92%; text-shadow: 0 8px 28px rgba(0,0,0,0.55); }
+        .slide-desc { font-size: 16px; line-height: 1.45; color: #e5e7eb; max-width: 28em; padding-right: 12px; text-shadow: 0 4px 18px rgba(0,0,0,0.7); }
+        .grade-row { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 14px; }
+        .grade-row span { font-size: 11px; letter-spacing: 0.14em; text-transform: uppercase; border: 1px solid rgba(255,246,237,0.28); padding: 6px 10px; border-radius: 999px; color: #fff6ed; }
+        .lab-cols { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-top: 14px; }
+        .lab-col h3 { font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 8px; color: #fff6ed; }
+        .lab-list { list-style: none; }
+        .lab-list li { font-size: 14px; color: #d1d5db; padding: 4px 0; }
+        .lab-kicker, .lab-skus { font-size: 12px; letter-spacing: 0.16em; text-transform: uppercase; color: rgba(255,246,237,0.5); margin: 10px 0; }
+        .contact-row { display: flex; gap: 10px; margin-top: 16px; flex-wrap: wrap; }
+        .contact-row a { padding: 12px 18px; border-radius: 24px; text-decoration: none; font-size: 13px; font-weight: 600; text-transform: uppercase; }
+        .contact-row .wa { background: #fff; color: #000; }
+        .contact-row .call { border: 1px solid rgba(255,255,255,0.35); color: #fff; }
+        .mobile-chapters { display: flex; position: fixed; left: 16px; right: 16px; bottom: calc(12px + env(safe-area-inset-bottom, 0px)); z-index: 30; gap: 6px; pointer-events: auto; }
+        .mobile-chapters a { flex: 1; text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none; color: rgba(255,255,255,0.85); background: rgba(0,0,0,0.55); border: 1px solid rgba(255,255,255,0.18); border-radius: 999px; padding: 10px 4px; backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
+        .mobile-chapters a.active { background: #fff; color: #000; border-color: #fff; }
+        @media (min-width: 900px) {
+            .cinematic-container { padding: 28px 60px 40px; }
+            .slide { padding: 0 40px; bottom: 22%; }
+            .mobile-chapters { left: 50%; right: auto; transform: translateX(-50%); width: min(520px, 90vw); }
+        }
+    </style>
+    <script type="importmap">
+    {
+        "imports": {
+            "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+            "three/addons/loaders/GLTFLoader.js": "https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js"
+        }
+    }
+    </script>
 </head>
 <body>
-<div class="cinematic-container">
-<div class="main-header"><a class="brand-mark" href="#slide-1">iConfigure</a><a class="contact-btn" href="https://wa.me/971559946415">WhatsApp</a></div>
-<div class="slide active" id="slide-1"><h2 class="slide-title">Restore<br>iPhone</h2><p class="slide-desc">Dubai iPhone repair and refurbishment. Screens, batteries, housings, board-level work.</p[...]
-<div class="slide" id="slide-2"><h2 class="slide-title">Partner<br>Stock</h2><p class="slide-desc">Trade-ins, returns, graded lots. Restored and sent back ready for resale.</p><div class="grade-ro[...]
-<div class="slide" id="slide-lab"><h2 class="slide-title">The<br>Lab</h2><p class="lab-kicker">Board level</p><p class="slide-desc">No power, no charge, boot loop, liquid. Rail first. Heat last.</[...]
-<div class="slide" id="slide-3"><h2 class="slide-title">Personal</h2><p class="slide-desc">Cracked glass, battery, no-power, water. Message, drop, pick up restored.</p></div>
-<div class="slide" id="slide-4"><h2 class="slide-title">Talk<br>to us</h2><p class="slide-desc">Mukthar · Technical Specialist. +971 55 994 6415. Dubai.</p><div class="contact-row"><a class="wa" [...]
-</div>
-<nav class="mobile-chapters"><a href="#slide-1" class="nav-link">Repair</a><a href="#slide-2" class="nav-link">B2B</a><a href="#slide-lab" class="nav-link">Lab</a><a href="#slide-3" class="nav-lin[...]
-<canvas id="webgl"></canvas>
-<script type="module">
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-const ASSET='https://api.getlayers.ai/storage/v1/object/public/public/assets/laocoon-59f84455c6';
-const canvas=document.querySelector('#webgl');
-const sizes={width:innerWidth,height:innerHeight};
-const clock=new THREE.Clock();
-let currentScroll=0,tmx=0,tmy=0,mouseX=0,mouseY=0,scene,camera,renderer,pivot,uniforms,sparks;
-const N=280,sparkData=[];
-function updateSlides(s){const set=(id,a,b)=>{const e=document.getElementById(id);if(e)e.classList.toggle('active',s>=a&&s<=b)};set('slide-1',-0.1,0.12);set('slide-2',0.20,0.34);set('slide-lab',0.[...]
-function setupNav(){const map={'#slide-1':0,'#slide-2':0.26,'#slide-lab':0.46,'#slide-3':0.66,'#slide-4':0.94};document.querySelectorAll('.nav-link,.brand-mark').forEach(l=>l.addEventListener('cli[...]
-function init(){scene=new THREE.Scene();scene.background=new THREE.Color('#000');camera=new THREE.PerspectiveCamera(50,sizes.width/sizes.height,0.1,100);camera.position.set(0,0.2,3);scene.add(came[...]
-function animate(){requestAnimationFrame(animate);const max=document.documentElement.scrollHeight-innerHeight;const target=max>0?scrollY/max:0;currentScroll+=(target-currentScroll)*0.04;mouseX+=(t[...]
-function boot(){init();setupNav();updateSlides(0);animate()}
-addEventListener('pointermove',e=>{tmx=e.clientX/innerWidth*2-1;tmy=e.clientY/innerHeight*2-1});addEventListener('resize',()=>{sizes.width=innerWidth;sizes.height=innerHeight;camera.aspect=sizes.w[...]
-if(document.readyState==='loading')addEventListener('DOMContentLoaded',boot);else boot();
-</script>
+    <div class="cinematic-container">
+        <div class="main-header">
+            <a class="brand-mark" href="#slide-1">iConfigure</a>
+            <a class="contact-btn" href="https://wa.me/971559946415">WhatsApp</a>
+        </div>
+
+        <div class="slide active" id="slide-1">
+            <h2 class="slide-title">Restore<br>iPhone</h2>
+            <p class="slide-desc">Dubai iPhone repair and refurbishment. Screens, batteries, housings, board-level work.<br>Partners with stock to recover, and people who want their own phone back.</p>
+        </div>
+
+        <div class="slide" id="slide-2">
+            <h2 class="slide-title">Partner<br>Stock</h2>
+            <p class="slide-desc">Trade-ins, returns, graded lots. Restored and sent back ready for resale. Outbound on your grade sheet.</p>
+            <div class="grade-row"><span>A+</span><span>A</span><span>B</span><span>C</span><span>BER</span></div>
+        </div>
+
+        <div class="slide" id="slide-lab">
+            <h2 class="slide-title">The<br>Lab</h2>
+            <p class="lab-kicker">Board level</p>
+            <p class="slide-desc">No power, no charge, boot loop, liquid. Rail first. Heat last. Original board, original IMEI.</p>
+            <div class="lab-cols">
+                <div class="lab-col">
+                    <h3>Diagnose</h3>
+                    <ul class="lab-list">
+                        <li>Current-draw on the bench</li>
+                        <li>Thermal short hunt</li>
+                        <li>Ultrasonic liquid clean</li>
+                        <li>Schematic rail trace</li>
+                    </ul>
+                </div>
+                <div class="lab-col">
+                    <h3>Restore</h3>
+                    <ul class="lab-list">
+                        <li>Charging and power ICs</li>
+                        <li>Backlight, audio, touch</li>
+                        <li>Connector and pad rebuild</li>
+                        <li>BGA reball · board split</li>
+                    </ul>
+                </div>
+            </div>
+            <p class="lab-skus">Diagnose · Restore · Separate · Harvest</p>
+        </div>
+
+        <div class="slide" id="slide-3">
+            <h2 class="slide-title">Personal</h2>
+            <p class="slide-desc">Cracked glass, swelling battery, no-power, water damage. Message us, drop the phone, pick it up restored.</p>
+        </div>
+
+        <div class="slide" id="slide-4">
+            <h2 class="slide-title">Talk<br>to us</h2>
+            <p class="slide-desc">Mukthar · Technical Specialist. WhatsApp or call +971 55 994 6415. Dubai, UAE.</p>
+            <div class="contact-row">
+                <a class="wa" href="https://wa.me/971559946415">WhatsApp</a>
+                <a class="call" href="tel:+971559946415">Call</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="mobile-chapters">
+        <a href="#slide-1" class="nav-link active">Repair</a>
+        <a href="#slide-2" class="nav-link">B2B</a>
+        <a href="#slide-lab" class="nav-link">Lab</a>
+        <a href="#slide-3" class="nav-link">You</a>
+        <a href="#slide-4" class="nav-link">Talk</a>
+    </nav>
+
+    <canvas id="webgl"></canvas>
+
+    <script type="module">
+        import * as THREE from 'three';
+        import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
+
+        const ASSET = 'https://api.getlayers.ai/storage/v1/object/public/public/assets/laocoon-59f84455c6';
+        const canvas = document.querySelector('#webgl');
+        const sizes = { width: innerWidth, height: innerHeight };
+        const clock = new THREE.Clock();
+        let currentScroll = 0, tmx = 0, tmy = 0, mouseX = 0, mouseY = 0;
+        let scene, camera, renderer, pivot, uniforms, sparks;
+        const N = 280;
+        const sparkData = [];
+
+        function updateSlides(s) {
+            const set = (id, a, b) => {
+                const e = document.getElementById(id);
+                if (e) e.classList.toggle('active', s >= a && s <= b);
+            };
+            set('slide-1', -0.1, 0.12);
+            set('slide-2', 0.20, 0.34);
+            set('slide-lab', 0.40, 0.54);
+            set('slide-3', 0.60, 0.74);
+            set('slide-4', 0.82, 1.05);
+            document.querySelectorAll('.mobile-chapters a').forEach((a, i) => {
+                const ranges = [[-0.1,0.12],[0.20,0.34],[0.40,0.54],[0.60,0.74],[0.82,1.05]];
+                a.classList.toggle('active', s >= ranges[i][0] && s <= ranges[i][1]);
+            });
+        }
+
+        function setupNav() {
+            const map = { '#slide-1': 0, '#slide-2': 0.26, '#slide-lab': 0.46, '#slide-3': 0.66, '#slide-4': 0.94 };
+            document.querySelectorAll('.nav-link, .brand-mark').forEach(l => {
+                l.addEventListener('click', e => {
+                    e.preventDefault();
+                    const href = l.getAttribute('href');
+                    const t = map[href];
+                    if (t == null) return;
+                    const max = document.documentElement.scrollHeight - innerHeight;
+                    scrollTo({ top: t * max, behavior: 'smooth' });
+                });
+            });
+        }
+
+        function init() {
+            scene = new THREE.Scene();
+            scene.background = new THREE.Color('#000');
+            camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 100);
+            camera.position.set(0, 0.2, 3);
+            scene.add(camera);
+
+            renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: false, powerPreference: 'high-performance' });
+            renderer.setSize(sizes.width, sizes.height);
+            renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+            renderer.outputColorSpace = THREE.SRGBColorSpace;
+
+            uniforms = {
+                uTime: { value: 0 },
+                uScroll: { value: 0 },
+                uResolution: { value: new THREE.Vector2(sizes.width, sizes.height) }
+            };
+
+            const bgMat = new THREE.ShaderMaterial({
+                uniforms,
+                vertexShader: `varying vec2 vUv; void main(){ vUv=uv; gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0); }`,
+                fragmentShader: `
+                    uniform float uTime; uniform float uScroll; varying vec2 vUv;
+                    void main(){
+                        vec2 uv = vUv * 2.0 - 1.0;
+                        float t = uTime * 0.08;
+                        float w = sin(uv.x*2.4 + t*0.6)*0.50 + sin(uv.y*3.2 + t*-0.7)*0.35 + sin((uv.x+uv.y)*4.0 + t*1.2)*0.15;
+                        w += uScroll * 5.0 * 0.02;
+                        float crest = smoothstep(0.2, 0.9, w) * 1.4;
+                        vec3 bronze = vec3(0.72, 0.42, 0.12);
+                        vec3 sapphire = vec3(0.05, 0.12, 0.35);
+                        vec3 col = mix(bronze, sapphire, clamp(vUv.y + w * 0.15, 0.0, 1.0));
+                        col += crest * 0.08;
+                        float vig = 1.0 - dot(uv, uv) * 0.12;
+                        gl_FragColor = vec4(col * vig, 1.0);
+                    }`,
+                depthWrite: false,
+                depthTest: false
+            });
+            const plane = new THREE.Mesh(new THREE.PlaneGeometry(30, 30), bgMat);
+            plane.position.z = -8;
+            plane.renderOrder = -10;
+            camera.add(plane);
+
+            scene.add(new THREE.AmbientLight('#fff', 0.12));
+            const key = new THREE.SpotLight('#fff', 18);
+            key.position.set(4, 6, 3);
+            scene.add(key);
+
+            pivot = new THREE.Group();
+            scene.add(pivot);
+
+            new GLTFLoader().load(ASSET + '/bronze_horse.glb', g => {
+                const m = g.scene;
+                const box = new THREE.Box3().setFromObject(m);
+                const sz = box.getSize(new THREE.Vector3());
+                m.scale.setScalar(3.5 / Math.max(sz.x, sz.y, sz.z, 0.0001));
+                m.updateMatrixWorld(true);
+                m.position.sub(new THREE.Box3().setFromObject(m).getCenter(new THREE.Vector3()));
+                pivot.add(m);
+                pivot.position.y = -0.4;
+            });
+
+            const geo = new THREE.BufferGeometry();
+            const pos = new Float32Array(N * 3);
+            const col = new Float32Array(N * 3);
+            for (let i = 0; i < N; i++) {
+                pos[i * 3] = (Math.random() - 0.5) * 6;
+                pos[i * 3 + 1] = (Math.random() - 0.5) * 5;
+                pos[i * 3 + 2] = (Math.random() - 0.5) * 6;
+                col[i * 3] = 1; col[i * 3 + 1] = 0.45; col[i * 3 + 2] = 0.08;
+                sparkData.push({ vy: 0.2 + Math.random() * 0.25 });
+            }
+            geo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+            geo.setAttribute('color', new THREE.BufferAttribute(col, 3));
+            sparks = new THREE.Points(geo, new THREE.PointsMaterial({
+                size: 0.03, vertexColors: true, transparent: true, opacity: 0.8,
+                blending: THREE.AdditiveBlending, depthWrite: false
+            }));
+            scene.add(sparks);
+        }
+
+        function animate() {
+            requestAnimationFrame(animate);
+            const max = document.documentElement.scrollHeight - innerHeight;
+            const target = max > 0 ? scrollY / max : 0;
+            currentScroll += (target - currentScroll) * 0.04;
+            mouseX += (tmx - mouseX) * 0.05;
+            mouseY += (tmy - mouseY) * 0.05;
+            if (pivot) pivot.rotation.y = mouseX * 0.2;
+            if (sparks) {
+                const p = sparks.geometry.attributes.position.array;
+                const dt = clock.getDelta();
+                for (let i = 0; i < N; i++) {
+                    p[i * 3 + 1] += sparkData[i].vy * dt;
+                    if (p[i * 3 + 1] > 3) p[i * 3 + 1] = -2.4;
+                }
+                sparks.geometry.attributes.position.needsUpdate = true;
+            }
+            const phi = currentScroll * Math.PI * 2;
+            const y = 0.35 + Math.sin(currentScroll * Math.PI) * 0.8;
+            const r = 4.2 - Math.sin(currentScroll * Math.PI) * 0.6;
+            camera.position.lerp(new THREE.Vector3(r * Math.sin(phi), y, r * Math.cos(phi)), 0.04);
+            camera.lookAt(0, -0.15, 0);
+            uniforms.uTime.value = clock.getElapsedTime();
+            uniforms.uScroll.value = currentScroll;
+            updateSlides(currentScroll);
+            renderer.render(scene, camera);
+        }
+
+        function boot() {
+            init();
+            setupNav();
+            updateSlides(0);
+            animate();
+        }
+
+        addEventListener('pointermove', e => {
+            tmx = e.clientX / innerWidth * 2 - 1;
+            tmy = e.clientY / innerHeight * 2 - 1;
+        });
+        addEventListener('resize', () => {
+            sizes.width = innerWidth;
+            sizes.height = innerHeight;
+            camera.aspect = sizes.width / sizes.height;
+            camera.updateProjectionMatrix();
+            renderer.setSize(sizes.width, sizes.height);
+            uniforms.uResolution.value.set(sizes.width, sizes.height);
+        });
+
+        if (document.readyState === 'loading') addEventListener('DOMContentLoaded', boot);
+        else boot();
+    </script>
 </body>
 </html>
