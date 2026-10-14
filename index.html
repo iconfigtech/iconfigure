@@ -1,66 +1,931 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<meta name="theme-color" content="#000000">
-<title>iConfigure</title>
-<style>
-*{margin:0;padding:0;box-sizing:border-box}
-html,body{width:100%;margin:0;background:#000;touch-action:pan-y;-webkit-overflow-scrolling:touch}
-body{min-height:900vh;font-family:-apple-system,BlinkMacSystemFont,Helvetica,Arial,sans-serif;color:#fff;overflow-x:hidden}
-#webgl{position:fixed;inset:0;width:100%;height:100%;z-index:1;pointer-events:none}
-.cinematic-container{position:fixed;inset:0;z-index:10;pointer-events:none;padding:calc(16px + env(safe-area-inset-top,0px)) 22px 28px}
-.main-header{display:flex;justify-content:space-between;align-items:center;pointer-events:auto;padding:8px 0 12px}
-.brand-mark{display:inline-flex;background:#fff;color:#000;border-radius:8px;padding:6px 12px;font-size:18px;text-decoration:none}
-.contact-btn{background:#fff;color:#000;text-decoration:none;font-size:12px;font-weight:600;letter-spacing:1px;text-transform:uppercase;padding:10px 16px;border-radius:24px}
-.slide{position:absolute;left:0;right:0;bottom:18%;width:auto;padding:0 22px;opacity:0;visibility:hidden}
-.slide.active{opacity:1;visibility:visible;pointer-events:auto}
-.slide-title{font-size:clamp(40px,11vw,96px);line-height:.94;font-weight:600;letter-spacing:-.035em;margin-bottom:14px;color:#fff6ed;max-width:92%;text-shadow:0 8px 28px rgba(0,0,0,.55)}
-.slide-desc{font-size:16px;line-height:1.45;color:#e5e7eb;max-width:28em;padding-right:12px;text-shadow:0 4px 18px rgba(0,0,0,.7)}
-.grade-row{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px}
-.grade-row span{font-size:11px;letter-spacing:.14em;text-transform:uppercase;border:1px solid rgba(255,246,237,.28);padding:6px 10px;border-radius:999px}
-.lab-cols{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:14px}
-.lab-col h3{font-size:11px;letter-spacing:.2em;text-transform:uppercase;margin-bottom:8px}
-.lab-list{list-style:none}
-.lab-list li{font-size:14px;color:#d1d5db;padding:4px 0}
-.lab-kicker,.lab-skus{font-size:12px;letter-spacing:.16em;text-transform:uppercase;color:rgba(255,246,237,.5);margin:10px 0}
-.contact-row{display:flex;gap:10px;margin-top:16px;flex-wrap:wrap}
-.contact-row a{padding:12px 18px;border-radius:24px;text-decoration:none;font-size:13px;font-weight:600;text-transform:uppercase}
-.contact-row .wa{background:#fff;color:#000}
-.contact-row .call{border:1px solid rgba(255,255,255,.35);color:#fff}
-.mobile-chapters{display:flex;position:fixed;left:16px;right:16px;bottom:calc(12px + env(safe-area-inset-bottom,0px));z-index:30;gap:6px;pointer-events:auto}
-.mobile-chapters a{flex:1;text-align:center;font-size:10px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;color:rgba(255,255,255,.8);background:rgba(0,0,0,.5);border:1px solid rgba(255,255,255,.16);padding:8px 0;border-radius:999px}
-</style>
-<script type="importmap">{"imports":{"three":"https://unpkg.com/three@0.160.0/build/three.module.js","three/addons/loaders/GLTFLoader.js":"https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js"}}</script>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#070b10">
+  <meta name="description" content="iConfigure provides expert iPhone repair, refurbishment, and board-level hardware support in Dubai, UAE.">
+  <meta name="keywords" content="iConfigure, Dubai iPhone repair, iPhone refurbishment, board-level repair, phone repair UAE, refurbished devices">
+  <meta name="author" content="iConfigure">
+  <meta property="og:title" content="iConfigure | Dubai iPhone Repair & Refurbishment">
+  <meta property="og:description" content="Repair, refurbishment, and board-level diagnostics for premium mobile devices in Dubai.">
+  <meta property="og:type" content="website">
+  <meta property="og:image" content="https://iconfigure.js.org/social-preview.jpg">
+  <title>iConfigure | Dubai iPhone Repair & Refurbishment</title>
+  <style>
+    :root {
+      --bg: #070b10;
+      --bg-2: #0d141b;
+      --panel: rgba(12, 16, 22, 0.72);
+      --panel-strong: rgba(18, 23, 31, 0.88);
+      --text: #f5f7fb;
+      --muted: #c9d1de;
+      --soft: rgba(255, 255, 255, 0.7);
+      --line: rgba(255,255,255,0.14);
+      --gold: #f5c36b;
+      --gold-2: #f1a94f;
+      --success: #9be7a6;
+      --shadow: rgba(0, 0, 0, 0.42);
+      --max-width: 1180px;
+    }
+
+    * { box-sizing: border-box; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      margin: 0;
+      background:
+        radial-gradient(circle at top, rgba(245, 195, 107, 0.15), transparent 28%),
+        linear-gradient(180deg, #04070b 0%, #070b10 100%);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      line-height: 1.6;
+      overflow-x: hidden;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    #webgl {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: 1;
+      pointer-events: none;
+      opacity: 0.94;
+    }
+
+    .cinematic-container {
+      position: fixed;
+      inset: 0;
+      z-index: 10;
+      pointer-events: none;
+      padding: calc(16px + env(safe-area-inset-top, 0px)) 22px 28px;
+    }
+
+    .main-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      pointer-events: auto;
+      padding: 8px 0 12px;
+      width: min(var(--max-width), calc(100% - 20px));
+      margin: 0 auto;
+    }
+
+    .brand-mark {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(255,255,255,0.96);
+      color: #0b0f13;
+      border-radius: 12px;
+      padding: 9px 16px;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      box-shadow: 0 16px 36px rgba(0,0,0,0.28);
+    }
+
+    .contact-btn {
+      background: rgba(255,255,255,0.95);
+      color: #0b0f13;
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      padding: 12px 18px;
+      border-radius: 999px;
+      box-shadow: 0 16px 28px rgba(0,0,0,0.2);
+    }
+
+    .slide {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 18%;
+      width: auto;
+      padding: 0 22px;
+      opacity: 0;
+      visibility: hidden;
+      width: min(var(--max-width), calc(100% - 20px));
+      margin: 0 auto;
+    }
+
+    .slide.active {
+      opacity: 1;
+      visibility: visible;
+      pointer-events: auto;
+    }
+
+    .slide-title {
+      font-size: clamp(40px, 11vw, 96px);
+      line-height: 0.94;
+      font-weight: 700;
+      letter-spacing: -0.04em;
+      margin: 0 0 14px;
+      color: #fff6ed;
+      max-width: 92%;
+      text-shadow: 0 8px 28px rgba(0,0,0,0.55);
+    }
+
+    .slide-desc {
+      font-size: 16px;
+      line-height: 1.5;
+      color: #e5e7eb;
+      max-width: 28em;
+      padding-right: 12px;
+      text-shadow: 0 4px 18px rgba(0,0,0,0.7);
+    }
+
+    .grade-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 14px;
+    }
+
+    .grade-row span {
+      font-size: 11px;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      border: 1px solid rgba(255,246,237,0.28);
+      padding: 6px 10px;
+      border-radius: 999px;
+      color: rgba(255,255,255,0.9);
+    }
+
+    .lab-cols {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-top: 14px;
+      max-width: 480px;
+    }
+
+    .lab-col h3 {
+      font-size: 11px;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      margin: 0 0 8px;
+      color: rgba(255,246,237,0.8);
+    }
+
+    .lab-list {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+    }
+
+    .lab-list li {
+      font-size: 14px;
+      color: #d1d5db;
+      padding: 4px 0;
+    }
+
+    .lab-kicker,
+    .lab-skus {
+      font-size: 12px;
+      letter-spacing: 0.16em;
+      text-transform: uppercase;
+      color: rgba(255,246,237,0.5);
+      margin: 10px 0;
+    }
+
+    .contact-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px;
+      flex-wrap: wrap;
+    }
+
+    .contact-row a {
+      padding: 12px 18px;
+      border-radius: 999px;
+      text-decoration: none;
+      font-size: 13px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    .contact-row .wa {
+      background: #fff;
+      color: #000;
+    }
+
+    .contact-row .call {
+      border: 1px solid rgba(255,255,255,0.35);
+      color: #fff;
+      background: rgba(255,255,255,0.03);
+    }
+
+    .mobile-chapters {
+      display: flex;
+      position: fixed;
+      left: 16px;
+      right: 16px;
+      bottom: calc(12px + env(safe-area-inset-bottom,0px));
+      z-index: 30;
+      gap: 6px;
+      pointer-events: auto;
+      width: min(var(--max-width), calc(100% - 20px));
+      margin: 0 auto;
+    }
+
+    .mobile-chapters a {
+      flex: 1;
+      text-align: center;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      text-decoration: none;
+      color: rgba(255,255,255,0.82);
+      background: rgba(14, 18, 24, 0.66);
+      border: 1px solid rgba(255,255,255,0.1);
+      backdrop-filter: blur(10px);
+      border-radius: 12px;
+      padding: 10px 6px;
+    }
+
+    .site-content {
+      position: relative;
+      z-index: 20;
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto;
+      padding-top: 72vh;
+      padding-bottom: 80px;
+    }
+
+    .hero-panel,
+    .section-block,
+    .cta-panel,
+    .feature-box {
+      background: rgba(12, 16, 22, 0.68);
+      border: 1px solid var(--line);
+      backdrop-filter: blur(12px);
+      box-shadow: 0 30px 80px rgba(0,0,0,0.24);
+      border-radius: 28px;
+    }
+
+    .hero-panel {
+      padding: clamp(24px, 4vw, 40px);
+      margin-bottom: 20px;
+    }
+
+    .kicker {
+      display: inline-block;
+      font-size: 11px;
+      letter-spacing: 0.18em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 14px;
+      font-weight: 700;
+    }
+
+    .hero-panel h1 {
+      margin: 0 0 12px;
+      font-size: clamp(2.4rem, 5vw, 4.4rem);
+      line-height: 0.96;
+      letter-spacing: -0.05em;
+    }
+
+    .hero-panel p {
+      margin: 0;
+      font-size: 1.08rem;
+      color: var(--muted);
+      max-width: 760px;
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 22px;
+    }
+
+    .hero-actions a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 48px;
+      padding: 0 22px;
+      border-radius: 999px;
+      font-size: 0.82rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .hero-actions a:hover {
+      transform: translateY(-1px);
+    }
+
+    .hero-actions a:first-child {
+      background: linear-gradient(135deg, var(--gold) 0%, var(--gold-2) 100%);
+      color: #111;
+      box-shadow: 0 18px 30px rgba(241, 169, 79, 0.25);
+    }
+
+    .hero-actions a.secondary {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      color: var(--text);
+    }
+
+    .trust-list {
+      list-style: none;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px 18px;
+      padding: 0;
+      margin: 22px 0 0;
+      color: var(--soft);
+      font-size: 0.95rem;
+    }
+
+    .trust-list li {
+      position: relative;
+      padding-left: 18px;
+    }
+
+    .trust-list li::before {
+      content: "";
+      position: absolute;
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--success);
+      left: 0;
+      top: 0.58em;
+      transform: translateY(-50%);
+    }
+
+    .section-block {
+      padding: clamp(22px, 3vw, 34px);
+      margin-bottom: 20px;
+    }
+
+    .section-heading {
+      margin-bottom: 20px;
+    }
+
+    .section-heading h2,
+    .split-copy h2,
+    .cta-panel h2 {
+      margin: 0;
+      font-size: clamp(1.8rem, 3vw, 2.8rem);
+      line-height: 1.08;
+      letter-spacing: -0.04em;
+    }
+
+    .service-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+    }
+
+    .service-card {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px;
+      min-height: 220px;
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      display: grid;
+      place-items: center;
+      border-radius: 12px;
+      background: rgba(245, 195, 107, 0.12);
+      border: 1px solid rgba(245, 195, 107, 0.3);
+      font-size: 1.4rem;
+      margin-bottom: 18px;
+    }
+
+    .service-card h3 {
+      margin: 0 0 10px;
+      font-size: 1.18rem;
+    }
+
+    .service-card p {
+      margin: 0;
+      color: var(--muted);
+      font-size: 0.98rem;
+    }
+
+    .metric-grid {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 16px;
+      margin-bottom: 20px;
+    }
+
+    .metric {
+      background: rgba(255,255,255,0.02);
+      border: 1px solid var(--line);
+      border-radius: 20px;
+      padding: 20px;
+    }
+
+    .metric strong {
+      display: block;
+      font-size: clamp(1.8rem, 2.4vw, 2.5rem);
+      line-height: 1;
+      letter-spacing: -0.04em;
+      margin-bottom: 6px;
+    }
+
+    .metric span {
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+    }
+
+    .split {
+      display: grid;
+      grid-template-columns: 1.3fr 0.9fr;
+      gap: 18px;
+      align-items: stretch;
+    }
+
+    .split-copy {
+      padding: 10px 0;
+    }
+
+    .split-copy p {
+      color: var(--muted);
+      margin: 18px 0 0;
+      max-width: 620px;
+    }
+
+    .check-list {
+      list-style: none;
+      padding: 0;
+      margin: 20px 0 0;
+      display: grid;
+      gap: 12px;
+    }
+
+    .check-list li {
+      position: relative;
+      padding-left: 22px;
+      color: var(--text);
+      font-weight: 500;
+    }
+
+    .check-list li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--success);
+      font-weight: 700;
+    }
+
+    .feature-box {
+      padding: 22px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      min-height: 220px;
+    }
+
+    .feature-box .mini-tag {
+      color: var(--gold);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      font-size: 11px;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+
+    .feature-box ul {
+      list-style: none;
+      padding: 0;
+      margin: 0;
+      display: grid;
+      gap: 10px;
+      color: var(--muted);
+    }
+
+    .feature-box li {
+      border-bottom: 1px solid rgba(255,255,255,0.08);
+      padding-bottom: 8px;
+    }
+
+    .cta-panel {
+      padding: clamp(24px, 4vw, 40px);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      margin-bottom: 20px;
+    }
+
+    .cta-panel p {
+      margin: 12px 0 0;
+      color: var(--muted);
+      font-size: 1.04rem;
+    }
+
+    footer {
+      width: min(var(--max-width), calc(100% - 32px));
+      margin: 0 auto 32px;
+      color: rgba(255,255,255,0.68);
+      text-align: center;
+      font-size: 0.92rem;
+    }
+
+    @media (max-width: 980px) {
+      .service-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .metric-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+
+      .split {
+        grid-template-columns: 1fr;
+      }
+
+      .site-content {
+        padding-top: 66vh;
+      }
+    }
+
+    @media (max-width: 640px) {
+      .site-content {
+        width: min(var(--max-width), calc(100% - 20px));
+        padding-top: 62vh;
+      }
+
+      .main-header {
+        width: min(var(--max-width), calc(100% - 20px));
+      }
+
+      .brand-mark {
+        font-size: 14px;
+        padding: 8px 12px;
+      }
+
+      .contact-btn {
+        font-size: 10px;
+        padding: 10px 14px;
+      }
+
+      .service-grid,
+      .metric-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .hero-actions a {
+        width: 100%;
+      }
+
+      .cta-panel {
+        align-items: flex-start;
+      }
+    }
+  </style>
 </head>
 <body>
-<div class="cinematic-container">
-<div class="main-header"><a class="brand-mark" href="#slide-1">iConfigure</a><a class="contact-btn" href="https://wa.me/971559946415">WhatsApp</a></div>
-<div class="slide active" id="slide-1"><h2 class="slide-title">Restore<br>iPhone</h2><p class="slide-desc">Dubai iPhone repair and refurbishment. Screens, batteries, housings, board-level work.</p><p class="slide-desc">Partners with stock to recover, and people who want their own phone back.</p></div>
-<div class="slide" id="slide-2"><h2 class="slide-title">Partner<br>Stock</h2><p class="slide-desc">Trade-ins, returns, graded lots. Restored and sent back ready for resale.</p><div class="grade-row"><span>A+</span><span>A</span><span>B</span><span>C</span><span>BER</span></div></div>
-<div class="slide" id="slide-lab"><h2 class="slide-title">The<br>Lab</h2><p class="lab-kicker">Board level</p><p class="slide-desc">No power, no charge, boot loop, liquid. Rail first. Heat last.</p><div class="lab-cols"><div class="lab-col"><h3>Diagnose</h3><ul class="lab-list"><li>Current-draw</li><li>Thermal short hunt</li><li>Ultrasonic clean</li><li>Rail trace</li></ul></div><div class="lab-col"><h3>Restore</h3><ul class="lab-list"><li>Charging / power ICs</li><li>Backlight, audio, touch</li><li>Pads and connectors</li><li>BGA · board split</li></ul></div></div><p class="lab-skus">Diagnose · Restore · Separate · Harvest</p></div>
-<div class="slide" id="slide-3"><h2 class="slide-title">Personal</h2><p class="slide-desc">Cracked glass, battery, no-power, water. Message, drop, pick up restored.</p></div>
-<div class="slide" id="slide-4"><h2 class="slide-title">Talk<br>to us</h2><p class="slide-desc">Mukthar · Technical Specialist. +971 55 994 6415. Dubai.</p><div class="contact-row"><a class="wa" href="https://wa.me/971559946415">WhatsApp</a><a class="call" href="tel:+971559946415">Call</a></div></div>
-</div>
-<nav class="mobile-chapters"><a href="#slide-1" class="nav-link">Repair</a><a href="#slide-2" class="nav-link">B2B</a><a href="#slide-lab" class="nav-link">Lab</a><a href="#slide-3" class="nav-link">You</a><a href="#slide-4" class="nav-link">Talk</a></nav>
-<canvas id="webgl"></canvas>
-<script type="module">
-import * as THREE from 'three';
-import { GLTFLoader } from 'three/addons/loaders/GLTFLoader.js';
-const ASSET='https://api.getlayers.ai/storage/v1/object/public/public/assets/laocoon-59f84455c6';
-const canvas=document.querySelector('#webgl');
-const sizes={width:innerWidth,height:innerHeight};
-const clock=new THREE.Clock();
-let currentScroll=0,tmx=0,tmy=0,mouseX=0,mouseY=0,scene,camera,renderer,pivot,uniforms,sparks;
-const N=280,sparkData=[];
-function updateSlides(s){const set=(id,a,b)=>{const e=document.getElementById(id);if(e)e.classList.toggle('active',s>=a&&s<=b)};set('slide-1',-0.1,0.12);set('slide-2',0.20,0.34);set('slide-lab',0.40,0.54);set('slide-3',0.60,0.74);set('slide-4',0.84,1.05)}
-function setupNav(){const map={'#slide-1':0,'#slide-2':0.26,'#slide-lab':0.46,'#slide-3':0.66,'#slide-4':0.94};document.querySelectorAll('.nav-link,.brand-mark').forEach(l=>l.addEventListener('click',e=>{const h=l.getAttribute('href');if(!(h in map))return;e.preventDefault();scrollTo({top:(document.documentElement.scrollHeight-innerHeight)*map[h],behavior:'smooth'})}))}
-function init(){scene=new THREE.Scene();scene.background=new THREE.Color('#000');camera=new THREE.PerspectiveCamera(50,sizes.width/sizes.height,0.1,100);camera.position.set(0,0.2,3);scene.add(camera);uniforms={uTime:{value:0},uResolution:{value:new THREE.Vector2(sizes.width,sizes.height)},uScroll:{value:0}};const mat=new THREE.ShaderMaterial({uniforms,depthWrite:false,depthTest:false,vertexShader:'void main(){gl_Position=projectionMatrix*modelViewMatrix*vec4(position,1.0);}',fragmentShader:'uniform float uTime,uScroll;uniform vec2 uResolution;void main(){vec2 uv=(gl_FragCoord.xy-0.5*uResolution.xy)/uResolution.y;float t=uTime*0.08,s=uScroll;vec2 w=uv;w.x+=sin(uv.y*2.5+t+s*5.0)*0.35;float f=sin(dot(w,vec2(0.8,0.5))*2.4+t);float c=pow(max(0.0,1.0-abs(f-0.15)),8.0);vec3 col=mix(vec3(0.001),mix(vec3(0.08,0.04,0.01),vec3(0.01,0.03,0.06),s),smoothstep(-0.5,0.7,f));col+=mix(vec3(0.45,0.3,0.18),vec3(0.18,0.35,0.55),s)*c;col*=1.0-dot(uv,uv)*0.12;gl_FragColor=vec4(col,1.0);}'});const pl=new THREE.Mesh(new THREE.PlaneGeometry(30,30),mat);pl.position.z=-8;camera.add(pl);renderer=new THREE.WebGLRenderer({canvas,antialias:true});renderer.setSize(sizes.width,sizes.height);renderer.setPixelRatio(Math.min(devicePixelRatio,2));scene.add(new THREE.AmbientLight('#fff',0.12));const key=new THREE.SpotLight('#fff',18);key.position.set(4,6,3);scene.add(key);pivot=new THREE.Group();scene.add(pivot);new GLTFLoader().load(ASSET+'/bronze_horse.glb',g=>{const m=g.scene;const box=new THREE.Box3().setFromObject(m);const sz=box.getSize(new THREE.Vector3());m.scale.setScalar(3.5/Math.max(sz.x,sz.y,sz.z,0.0001));m.updateMatrixWorld(true);m.position.sub(new THREE.Box3().setFromObject(m).getCenter(new THREE.Vector3()));pivot.add(m);pivot.position.y=-0.4});const geo=new THREE.BufferGeometry(),pos=new Float32Array(N*3),col=new Float32Array(N*3);for(let i=0;i<N;i++){pos[i*3]=(Math.random()-.5)*6;pos[i*3+1]=(Math.random()-.5)*5;pos[i*3+2]=(Math.random()-.5)*6;col[i*3]=1;col[i*3+1]=.45;col[i*3+2]=.08;sparkData.push({vy:.2+Math.random()*.25})}geo.setAttribute('position',new THREE.BufferAttribute(pos,3));geo.setAttribute('color',new THREE.BufferAttribute(col,3));sparks=new THREE.Points(geo,new THREE.PointsMaterial({size:0.03,vertexColors:true,transparent:true,opacity:0.8,blending:THREE.AdditiveBlending,depthWrite:false}));scene.add(sparks)}
-function animate(){requestAnimationFrame(animate);const max=document.documentElement.scrollHeight-innerHeight;const target=max>0?scrollY/max:0;currentScroll+=(target-currentScroll)*0.04;mouseX+=(tmx-mouseX)*0.05;mouseY+=(tmy-mouseY)*0.05;if(pivot){pivot.rotation.y=mouseX*0.2}if(sparks){const p=sparks.geometry.attributes.position.array;const dt=clock.getDelta();for(let i=0;i<N;i++){p[i*3+1]+=sparkData[i].vy*dt;if(p[i*3+1]>3)p[i*3+1]=-2.4}sparks.geometry.attributes.position.needsUpdate=true}const phi=currentScroll*Math.PI*2,y=0.35+Math.sin(currentScroll*Math.PI)*0.8,r=4.2-Math.sin(currentScroll*Math.PI)*0.6;camera.position.lerp(new THREE.Vector3(r*Math.sin(phi),y,r*Math.cos(phi)),0.04);camera.lookAt(0,-0.15,0);uniforms.uTime.value=clock.getElapsedTime();uniforms.uScroll.value=currentScroll;updateSlides(currentScroll);renderer.render(scene,camera)}
-function boot(){init();setupNav();updateSlides(0);animate()}
-addEventListener('pointermove',e=>{tmx=e.clientX/innerWidth*2-1;tmy=e.clientY/innerHeight*2-1});addEventListener('resize',()=>{sizes.width=innerWidth;sizes.height=innerHeight;camera.aspect=sizes.width/sizes.height;camera.updateProjectionMatrix();renderer.setSize(sizes.width,sizes.height);uniforms.uResolution.value.set(sizes.width,sizes.height)});
-if(document.readyState==='loading')addEventListener('DOMContentLoaded',boot);else boot();
-</script>
+  <div class="cinematic-container">
+    <div class="main-header">
+      <a class="brand-mark" href="#top">iConfigure</a>
+      <a class="contact-btn" href="https://wa.me/971559946415">WhatsApp</a>
+    </div>
+
+    <div class="slide active" id="slide-1">
+      <h2 class="slide-title">Restore<br>iPhone</h2>
+      <p class="slide-desc">Dubai iPhone repair and refurbishment. Screens, batteries, housings, and board-level work with precision.</p>
+    </div>
+
+    <div class="slide" id="slide-2">
+      <h2 class="slide-title">Partner<br>Stock</h2>
+      <p class="slide-desc">Trade-ins, returns, and graded lots restored and prepared for resale-ready workflows.</p>
+      <div class="grade-row">
+        <span>Grade A</span>
+        <span>Grade B</span>
+        <span>Refurb</span>
+      </div>
+    </div>
+
+    <div class="slide" id="slide-lab">
+      <h2 class="slide-title">The<br>Lab</h2>
+      <p class="lab-kicker">Board level</p>
+      <p class="slide-desc">No power, no charge, boot loops, and liquid damage — traced with disciplined hardware diagnostics.</p>
+      <div class="lab-cols">
+        <div class="lab-col">
+          <h3>Faults</h3>
+          <ul class="lab-list">
+            <li>Power rails</li>
+            <li>Charging faults</li>
+            <li>Water damage</li>
+          </ul>
+        </div>
+        <div class="lab-col">
+          <h3>Approach</h3>
+          <ul class="lab-list">
+            <li>Rail-first</li>
+            <li>Heat-last</li>
+            <li>Trace and test</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <div class="slide" id="slide-3">
+      <h2 class="slide-title">Personal</h2>
+      <p class="slide-desc">Cracked glass, battery problems, water issues, and common repair needs — handled quickly and clearly.</p>
+    </div>
+
+    <div class="slide" id="slide-4">
+      <h2 class="slide-title">Talk<br>to us</h2>
+      <p class="slide-desc">Mukthar · Technical Specialist · +971 55 994 6415 · Dubai, UAE.</p>
+      <div class="contact-row">
+        <a class="wa" href="https://wa.me/971559946415">WhatsApp</a>
+        <a class="call" href="tel:+971559946415">Call</a>
+      </div>
+    </div>
+  </div>
+
+  <nav class="mobile-chapters">
+    <a href="#slide-1" class="nav-link">Repair</a>
+    <a href="#slide-2" class="nav-link">B2B</a>
+    <a href="#slide-lab" class="nav-link">Lab</a>
+    <a href="#slide-3" class="nav-link">Personal</a>
+    <a href="#slide-4" class="nav-link">Contact</a>
+  </nav>
+
+  <canvas id="webgl"></canvas>
+
+  <main class="site-content">
+    <section class="hero-panel">
+      <span class="kicker">Dubai • UAE</span>
+      <h1>iConfigure</h1>
+      <p>Professional iPhone repair, refurbishment, and board-level diagnostics for customers and businesses that need reliable mobile device recovery.</p>
+      <div class="hero-actions">
+        <a href="https://wa.me/971559946415">Book a repair</a>
+        <a class="secondary" href="#services">Explore services</a>
+      </div>
+      <ul class="trust-list">
+        <li>Fast diagnostics</li>
+        <li>Technical repair support</li>
+        <li>Business turnaround workflows</li>
+      </ul>
+    </section>
+
+    <section id="services" class="section-block">
+      <div class="section-heading">
+        <span class="kicker">Our services</span>
+        <h2>Technical repair with business-grade confidence.</h2>
+      </div>
+
+      <div class="service-grid">
+        <article class="service-card">
+          <div class="service-icon">📱</div>
+          <h3>Repair & Restoration</h3>
+          <p>Screen replacement, battery issues, housing repair, water recovery, and device restoration for daily-use devices.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">🔁</div>
+          <h3>Refurbishment</h3>
+          <p>Device grading, refurbishment workflows, and resale-ready preparation for bulk return stock and trade-ins.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">🧪</div>
+          <h3>Board-Level Lab</h3>
+          <p>Advanced diagnostics for power faults, charging issues, no-boot states, and liquid-damaged hardware.</p>
+        </article>
+
+        <article class="service-card">
+          <div class="service-icon">🏢</div>
+          <h3>B2B Support</h3>
+          <p>Structured support for resellers, refurbishers, and trade partners who need dependable technical handling.</p>
+        </article>
+      </div>
+    </section>
+
+    <section class="metric-grid" aria-label="Business stats">
+      <div class="metric">
+        <strong>Repair</strong>
+        <span>Consumer service</span>
+      </div>
+      <div class="metric">
+        <strong>Refurb</strong>
+        <span>B2B stock</span>
+      </div>
+      <div class="metric">
+        <strong>Lab</strong>
+        <span>Board diagnosis</span>
+      </div>
+      <div class="metric">
+        <strong>Dubai</strong>
+        <span>Local support</span>
+      </div>
+    </section>
+
+    <section class="section-block split">
+      <div class="split-copy">
+        <span class="kicker">Why choose us</span>
+        <h2>Precision, accountability, and quality-driven recovery.</h2>
+        <p>iConfigure combines practical technician expertise with a strong business mindset. Whether the need is personal repair or structured outlet workflows, the company focuses on a clean, reliable path from diagnosis to resolution.</p>
+        <ul class="check-list">
+          <li>Clear fault assessment</li>
+          <li>Repair-first approach</li>
+          <li>Professional communication</li>
+          <li>Support for both consumers and business partners</li>
+        </ul>
+      </div>
+
+      <aside class="feature-box">
+        <div class="mini-tag">Core strengths</div>
+        <ul>
+          <li>iPhone hardware diagnostics</li>
+          <li>Battery and display recovery</li>
+          <li>Water damage handling</li>
+          <li>Business-grade refurbishment</li>
+          <li>Fast WhatsApp coordination</li>
+        </ul>
+      </aside>
+    </section>
+
+    <section class="cta-panel">
+      <div>
+        <span class="kicker">Need help today?</span>
+        <h2>Speak with Mukthar and get a clear repair path.</h2>
+        <p>From quick device fixes to deeper board-level diagnosis, we can help you identify the right next step.</p>
+      </div>
+      <div class="hero-actions">
+        <a href="tel:+971559946415">Call now</a>
+        <a class="secondary" href="https://wa.me/971559946415">WhatsApp</a>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    © 2026 iConfigure — Dubai iPhone repair, refurbishment, and hardware solutions.
+  </footer>
+
+  <script type="module">
+    import * as THREE from 'https://unpkg.com/three@0.160.0/build/three.module.js';
+    import { GLTFLoader } from 'https://unpkg.com/three@0.160.0/examples/jsm/loaders/GLTFLoader.js';
+
+    const ASSET = 'https://api.getlayers.ai/storage/v1/object/public/public/assets/laocoon-59f84455c6';
+    const canvas = document.querySelector('#webgl');
+    const sizes = { width: innerWidth, height: innerHeight };
+    const clock = new THREE.Clock();
+    let currentScroll = 0, tmx = 0, tmy = 0, mouseX = 0, mouseY = 0, scene, camera, renderer, pivot, uniforms, sparks;
+    const N = 280, sparkData = [];
+
+    function updateSlides(s) {
+      const set = (id, a, b) => {
+        const e = document.getElementById(id);
+        if (e) e.classList.toggle('active', s >= a && s <= b);
+      };
+      set('slide-1', -0.1, 0.12);
+      set('slide-2', 0.20, 0.34);
+      set('slide-lab', 0.42, 0.56);
+      set('slide-3', 0.64, 0.80);
+      set('slide-4', 0.88, 1.05);
+    }
+
+    function setupNav() {
+      const map = {
+        '#slide-1': 0,
+        '#slide-2': 0.26,
+        '#slide-lab': 0.46,
+        '#slide-3': 0.66,
+        '#slide-4': 0.94
+      };
+
+      document.querySelectorAll('.nav-link,.brand-mark').forEach(link => {
+        link.addEventListener('click', e => {
+          const target = link.getAttribute('href');
+          if (target && target.startsWith('#')) {
+            const scrollAmount = map[target] ?? 0;
+            window.scrollTo({ top: scrollAmount * (document.documentElement.scrollHeight - innerHeight), behavior: 'smooth' });
+            if (e) e.preventDefault();
+          }
+        });
+      });
+    }
+
+    function init() {
+      scene = new THREE.Scene();
+      scene.background = new THREE.Color('#000');
+      camera = new THREE.PerspectiveCamera(50, sizes.width / sizes.height, 0.1, 100);
+      camera.position.set(0, 0.2, 3);
+      scene.add(camera);
+
+      renderer = new THREE.WebGLRenderer({ canvas, antialias: true, alpha: true });
+      renderer.setPixelRatio(Math.min(devicePixelRatio, 2));
+      renderer.setSize(sizes.width, sizes.height);
+      renderer.setClearColor(0x000000, 0);
+
+      pivot = new THREE.Group();
+      scene.add(pivot);
+
+      const geo = new THREE.SphereGeometry(0.12, 12, 12);
+      const mat = new THREE.MeshBasicMaterial({ color: 0xf5d7a8, transparent: true, opacity: 0.9 });
+
+      for (let i = 0; i < N; i++) {
+        const mesh = new THREE.Mesh(geo, mat.clone());
+        mesh.position.set(
+          (Math.random() - 0.5) * 4,
+          (Math.random() - 0.5) * 4,
+          (Math.random() - 0.5) * 4
+        );
+        const s = 0.5 + Math.random() * 0.8;
+        mesh.scale.setScalar(s);
+        mesh.userData = {
+          angle: Math.random() * Math.PI * 2,
+          radius: 1.4 + Math.random() * 2.2,
+          speed: 0.2 + Math.random() * 0.7,
+          drift: (Math.random() - 0.5) * 0.4
+        };
+        sparkData.push(mesh);
+        pivot.add(mesh);
+      }
+
+      sparks = sparkData;
+    }
+
+    function animate() {
+      requestAnimationFrame(animate);
+
+      const max = document.documentElement.scrollHeight - innerHeight;
+      const target = max > 0 ? scrollY / max : 0;
+      currentScroll += (target - currentScroll) * 0.04;
+      mouseX += (tmx - mouseX) * 0.05;
+      mouseY += (tmy - mouseY) * 0.05;
+
+      camera.position.x = mouseX * 0.45;
+      camera.position.y = mouseY * 0.22;
+      camera.lookAt(0, 0.1, 0);
+
+      pivot.rotation.y += 0.0015;
+      pivot.rotation.x = currentScroll * 2.2 + mouseY * 0.4;
+
+      const t = clock.getElapsedTime();
+      for (let i = 0; i < sparks.length; i++) {
+        const s = sparks[i];
+        s.position.x = Math.sin(t * s.userData.speed + s.userData.angle) * s.userData.radius + Math.sin(t * 0.5 + i) * s.userData.drift;
+        s.position.y = Math.cos(t * (s.userData.speed * 0.9) + s.userData.angle) * 1.3 + mouseY * 0.5;
+        s.position.z = Math.sin(t * s.userData.speed + i) * 2.5;
+      }
+
+      updateSlides(currentScroll);
+      renderer.render(scene, camera);
+    }
+
+    function boot() {
+      init();
+      setupNav();
+      updateSlides(0);
+      animate();
+    }
+
+    addEventListener('pointermove', e => {
+      tmx = e.clientX / innerWidth * 2 - 1;
+      tmy = e.clientY / innerHeight * 2 - 1;
+    });
+
+    addEventListener('resize', () => {
+      sizes.width = innerWidth;
+      sizes.height = innerHeight;
+      camera.aspect = sizes.width / sizes.height;
+      camera.updateProjectionMatrix();
+      renderer.setSize(sizes.width, sizes.height);
+    });
+
+    if (document.readyState === 'loading') {
+      addEventListener('DOMContentLoaded', boot);
+    } else {
+      boot();
+    }
+  </script>
 </body>
 </html>
